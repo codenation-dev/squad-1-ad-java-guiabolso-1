@@ -1,13 +1,10 @@
 package br.com.guiabolso.centraldeerros.entity;
 
+import br.com.guiabolso.centraldeerros.enums.LevelEnum;
+
 import java.util.Calendar;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -21,8 +18,8 @@ public class Event {
 	
 	@Column(name = "level", length = 30, nullable = false)
 	@NotNull
-	@Size(max = 30)
-	private String level;
+	@Enumerated(EnumType.STRING)
+	private LevelEnum levelEnum;
 	
 	@Column(name = "log", length = 255, nullable = false)
 	@NotNull
@@ -56,12 +53,12 @@ public class Event {
 		this.id = id;
 	}
 
-	public String getLevel() {
-		return level;
+	public LevelEnum getLevelEnum() {
+		return levelEnum;
 	}
 
-	public void setLevel(String level) {
-		this.level = level;
+	public void setLevelEnum(LevelEnum levelEnum) {
+		this.levelEnum = levelEnum;
 	}
 
 	public String getLog() {
