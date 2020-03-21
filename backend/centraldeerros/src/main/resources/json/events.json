@@ -4,7 +4,7 @@
 		"date": "2020-01-10T10:25:16.015",
 		"description": "user.SErvice.Auth: password.Password.Compare: crypto/bcrypt",
 		"environment": "Produção",
-		"level": "warning",
+		"levelEnum": "WARNING",
 		"log": "Error log description",
 		"origin": "127.0.0.1"
 	},
@@ -13,7 +13,7 @@
 		"date": "2020-02-15T10:25:16.015",
 		"description": "acceleration.Detail: <not_found>",
 		"environment": "Homologação",
-		"level": "error",
+		"levelEnum": "ERROR",
 		"log": "Error log description",
 		"origin": "10.0.1.1"
 	},
@@ -22,7 +22,7 @@
 		"date": "2019-12-10T10:25:16.015",
 		"description": "acceleration.Service.AddCandidate: acceleration.MongoRepository.Add",
 		"environment": "Dev",
-		"level": "debug",
+		"levelEnum": "DEBUG",
 		"log": "app.server.com.br",
 		"origin": "app.server.com.br"
 	},
@@ -31,7 +31,7 @@
 		"date": "2018-07-02T10:25:16.015",
 		"description": "acceleration.Service.AddCandidate: acceleration.MongoRepository.Add",
 		"environment": "Homologação",
-		"level": "error",
+		"levelEnum": "ERROR",
 		"log": "app.server.com.br",
 		"origin": "app.server.com.br"
 	},
@@ -40,7 +40,7 @@
 		"date": "2017-09-26T10:25:16.015",
 		"description": "acceleration.Detail: <not_found>",
 		"environment": "Produção",
-		"level": "debug",
+		"levelEnum": "DEBUG",
 		"log": "Error log description",
 		"origin": "10.0.1.1"
 	},
@@ -49,7 +49,7 @@
 		"date": "2019-11-14T10:25:16.015",
 		"description": "user.SErvice.Auth: password.Password.Compare: crypto/bcrypt",
 		"environment": "Dev",
-		"level": "warning",
+		"levelEnum": "WARNING",
 		"log": "Error log description",
 		"origin": "127.0.0.1"
 	}
