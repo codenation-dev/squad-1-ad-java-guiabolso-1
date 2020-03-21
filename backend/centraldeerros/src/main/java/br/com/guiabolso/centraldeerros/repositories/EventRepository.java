@@ -1,17 +1,17 @@
 package br.com.guiabolso.centraldeerros.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import br.com.guiabolso.centraldeerros.entity.Event;
-import org.springframework.data.jpa.repository.Query;
-
 import java.util.List;
 
-public interface EventRepository extends JpaRepository<Event, Long> {
+import org.springframework.data.repository.CrudRepository;
 
-    List <Event> findAll();
+import br.com.guiabolso.centraldeerros.entity.Event;
 
-    List <Event> findAllOrderByLevel();
+public interface EventRepository extends CrudRepository<Event, Long> {
+	
+	   List <Event> findAll();
 
-    List <Event> findAllOrderByEventsQuantity();
+	   List <Event> findAllOrderByLevel();
+
+	   List <Event> findAllOrderByEventsQuantity();
 }
+
