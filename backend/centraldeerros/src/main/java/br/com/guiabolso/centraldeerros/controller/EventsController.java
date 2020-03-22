@@ -16,6 +16,7 @@ import br.com.guiabolso.centraldeerros.service.EventService;
 import br.com.guiabolso.centraldeerros.specification.EventEnumSpecification;
 import br.com.guiabolso.centraldeerros.specification.EventStringSpecification;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -42,7 +43,7 @@ public class EventsController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Event>> getEvent(@PathVariable(value = "id")long id){
+	public ResponseEntity<Optional<Event>> getEventById(@PathVariable(value = "id")long id){
 		try {
 			return new ResponseEntity<>((Optional<Event>) eventService.get(id), HttpStatus.OK);
 		}catch (Exception e) {
@@ -51,10 +52,9 @@ public class EventsController {
 	}
 
 	@PostMapping()
-	public ResponseEntity<Event> addEvent(@RequestBody Event event) {
+	public ResponseEntity<Event> addEvent(@Valid @RequestBody Event event) {
 		try {
-
-			return new ResponseEntity<>((Event) eventService.add(event), HttpStatus.CREATED);
+			return ResponseEntity.status(HttpStatus.CREATED).body(event);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
