@@ -6,6 +6,13 @@ import org.springframework.data.jpa.domain.Specification;
 
 import br.com.guiabolso.centraldeerros.entity.Event;
 import br.com.guiabolso.centraldeerros.repositories.EventRepository;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Optional;
+
 
 @Service
 public class EventService {
@@ -15,4 +22,12 @@ public class EventService {
 		return eventRepository.findAll(spec, pageable);
 	}
 
+	public Event add(Event object){
+		return eventRepository.save((Event) object);
+	}
+
+
+	public Optional<Event> get(Long id) {
+		return eventRepository.findById(id);
+	}
 }
