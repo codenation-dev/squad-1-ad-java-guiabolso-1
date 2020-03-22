@@ -19,6 +19,7 @@ import br.com.guiabolso.centraldeerros.specification.EventStringSpecification;
 import java.util.Optional;
 
 @Controller
+@RequestMapping
 public class EventsController {
 	@Autowired
 	EventService eventService;
@@ -40,7 +41,7 @@ public class EventsController {
 		}
 	}
 
-	@GetMapping("/event/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Optional<Event>> getEvent(@PathVariable(value = "id")long id){
 		try {
 			return new ResponseEntity<>((Optional<Event>) eventService.get(id), HttpStatus.OK);
@@ -49,7 +50,7 @@ public class EventsController {
 		}
 	}
 
-	@PostMapping("/event")
+	@PostMapping()
 	public ResponseEntity<Event> addEvent(@RequestBody Event event) {
 		try {
 
