@@ -1,5 +1,6 @@
 package br.com.guiabolso.centraldeerros.entity;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -9,19 +10,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "account")
 @EntityListeners(AuditingEntityListener.class)
+
 public class Account {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,16 +41,10 @@ public class Account {
     @NotNull
     @Size(max = 100)
 	private String email;
-	
-	@Column(name = "modified_at", nullable = false)
-    @LastModifiedDate
-    @Temporal(TemporalType.TIMESTAMP)
-	private Calendar modifiedAt;
-	
+
 	@Column(name = "created_at", nullable = false, updatable = false)
 	@CreatedDate
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar createdAt;
+	private LocalDateTime createdAt;
 
 	public long getId() {
 		return id;
@@ -85,19 +78,12 @@ public class Account {
 		this.email = email;
 	}
 
-	public Calendar getModifiedAt() {
-		return modifiedAt;
-	}
-
-	public void setModifiedAt(Calendar modifiedAt) {
-		this.modifiedAt = modifiedAt;
-	}
-
-	public Calendar getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Calendar createdAt) {
+	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
+
 }

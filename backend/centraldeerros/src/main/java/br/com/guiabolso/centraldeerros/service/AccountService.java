@@ -1,7 +1,6 @@
 package br.com.guiabolso.centraldeerros.service;
 
-import java.util.List;
-
+import br.com.guiabolso.centraldeerros.dto.AccountDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,19 +9,20 @@ import br.com.guiabolso.centraldeerros.repositories.AccountRepository;
 
 @Service
 public class AccountService {
-	
-	@Autowired(required=false)
-	private AccountRepository accountRepository;
-	
-	public AccountService(AccountRepository accountRepository) {
-		this.accountRepository = accountRepository;
-	}
-	
-	public Iterable<Account> list() {
-		return accountRepository.findAll();
-	}
-	
-	public Iterable<Account> save(List<Account> accounts) {
-		return accountRepository.saveAll(accounts);
+
+    @Autowired
+    AccountRepository accountRepository;
+
+
+    public void saveAccount(Account account) {
+        accountRepository.save(account);
+    }
+
+    public AccountDTO findById(Long id) {
+        return accountRepository.findById(id).map(AccountDTO::new).orElse(null);
+    }
+
+    public AccountDTO findByEmail (String email){
+    	return accountRepository.findByEmail(email).map(AccountDTO::new).orElse(null);
 	}
 }
