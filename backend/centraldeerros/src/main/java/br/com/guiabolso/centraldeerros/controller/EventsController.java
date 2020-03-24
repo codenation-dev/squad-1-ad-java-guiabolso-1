@@ -20,7 +20,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
-@RequestMapping
+@RequestMapping("/event")
 public class EventsController {
 	@Autowired
 	EventService eventService;
@@ -51,7 +51,7 @@ public class EventsController {
 		}
 	}
 
-	@PostMapping()
+	@PostMapping
 	public ResponseEntity<Event> addEvent(@Valid @RequestBody Event event) {
 		try {
 			return ResponseEntity.status(HttpStatus.CREATED).body(event);
@@ -60,4 +60,15 @@ public class EventsController {
 		}
 	}
 
+	@PutMapping ("/{id}")
+	public ResponseEntity<Event> updateEvent (@ResponseBody Event event, @PathVariable(value = "id")long id) {
+		try {
+			Optional<Event> event1 = eventService.get(id);
+			if (event.isPresent()){
+				event1.setID
+			}
+		}catch (Exception e){
+
+		}
+	}
 }

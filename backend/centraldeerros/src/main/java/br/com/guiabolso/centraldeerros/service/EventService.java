@@ -6,8 +6,13 @@ import org.springframework.data.jpa.domain.Specification;
 
 import br.com.guiabolso.centraldeerros.entity.Event;
 import br.com.guiabolso.centraldeerros.repositories.EventRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.awt.geom.RectangularShape;
 import java.util.Optional;
 
 @Service
@@ -25,4 +30,11 @@ public class EventService {
 	public Optional<Event> get(Long id) {
 		return eventRepository.findById(id);
 	}
+
+	public Event update(Event object){
+		return eventRepository.save((Event) object);
+	}
+
+
+
 }
