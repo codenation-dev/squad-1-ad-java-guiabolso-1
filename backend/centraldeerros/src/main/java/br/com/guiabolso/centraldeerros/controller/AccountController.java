@@ -17,7 +17,6 @@ public class AccountController {
 
     @Autowired
     AccountService accountService;
-    AccountDTO accountDTO;
 
     @PostMapping
     public ResponseEntity<Account> saveAccount(@Valid @RequestBody Account account){
