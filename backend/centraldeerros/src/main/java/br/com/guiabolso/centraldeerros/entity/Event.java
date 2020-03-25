@@ -1,12 +1,17 @@
 package br.com.guiabolso.centraldeerros.entity;
 
 import br.com.guiabolso.centraldeerros.enums.LevelEnum;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 
 @Entity
 @Table(name = "event")
@@ -35,15 +40,42 @@ public class Event {
 	@NotNull
 	@Size(max = 100)
 	private String origin;
-	
-	@Column(name = "date", nullable = false)
-	@NotNull
-	private Calendar date;
-	
+
 	@Column(name = "environment", length = 100, nullable = false)
 	@NotNull
 	@Size(max = 100)
 	private String environment;
+
+	@Column
+	@Min(0L)
+	private Long quantity = 0L;
+
+	@Column
+	private Boolean archive = false;
+
+	@Column(name = "modified_at", nullable = false)
+	@LastModifiedDate
+	private LocalDateTime modifiedAt;
+
+	@Column(name = "created_at", nullable = false, updatable = false)
+	@CreatedDate
+	private LocalDateTime createdAt;
+
+	public LocalDateTime getModifiedAt() {
+		return modifiedAt;
+	}
+
+	public void setModifiedAt(LocalDateTime modifiedAt) {
+		this.modifiedAt = modifiedAt;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
 
 	public long getId() {
 		return id;
@@ -59,6 +91,14 @@ public class Event {
 
 	public void setLevelEnum(LevelEnum levelEnum) {
 		this.levelEnum = levelEnum;
+	}
+
+	public Long getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Long quantity) {
+		this.quantity = quantity;
 	}
 
 	public String getLog() {
@@ -85,19 +125,18 @@ public class Event {
 		this.origin = origin;
 	}
 
-	public Calendar getDate() {
-		return date;
-	}
-
-	public void setDate(Calendar date) {
-		this.date = date;
-	}
-
 	public String getEnvironment() {
 		return environment;
 	}
 
 	public void setEnvironment(String environment) {
 		this.environment = environment;
+	}
+	public Boolean getArchive() {
+		return archive;
+	}
+
+	public void setArchive(Boolean archive) {
+		this.archive = archive;
 	}
 }
