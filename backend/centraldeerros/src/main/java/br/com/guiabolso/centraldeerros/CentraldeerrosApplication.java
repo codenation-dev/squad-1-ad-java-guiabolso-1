@@ -34,7 +34,11 @@ public class CentraldeerrosApplication {
 			InputStream inputStream = TypeReference.class.getResourceAsStream("/json/accounts.json");
 			try {
 				List<Account> accounts = mapper.readValue(inputStream,typeReference);
-				accountService.save(accounts);
+				for (Account account : accounts)
+				{
+					accountService.save(account);
+				}
+				
 				System.out.println("Accounts Saved!");
 			} catch (IOException e){
 				System.out.println("Unable to save accounts: " + e.getMessage());

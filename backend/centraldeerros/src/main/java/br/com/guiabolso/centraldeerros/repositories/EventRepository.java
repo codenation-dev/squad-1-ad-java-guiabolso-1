@@ -1,5 +1,7 @@
 package br.com.guiabolso.centraldeerros.repositories;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -11,5 +13,4 @@ import org.springframework.stereotype.Repository;
 public interface EventRepository extends JpaRepository<Event, Long> {
 
 	Page<Event> findAll(Specification<Event> spec, Pageable pageable);
-
 }
