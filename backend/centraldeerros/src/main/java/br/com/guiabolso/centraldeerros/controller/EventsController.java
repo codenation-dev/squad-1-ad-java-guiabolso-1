@@ -64,8 +64,9 @@ public class EventsController {
 	public ResponseEntity<Event> updateEvent (@ResponseBody Event event, @PathVariable(value = "id")long id) {
 		try {
 			Optional<Event> event1 = eventService.get(id);
-			if (event.isPresent()){
-				event1.setID
+			if (event1.isPresent()){
+				event.setId(event1.get().getId());
+				return new ResponseEntity<>((Event) eventService.update(event),HttpStatus.OK);
 			}
 		}catch (Exception e){
 
