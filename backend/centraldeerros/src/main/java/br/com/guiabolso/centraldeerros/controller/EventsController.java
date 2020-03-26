@@ -61,7 +61,7 @@ public class EventsController {
 	}
 
 	@PutMapping ("/{id}")
-	public ResponseEntity<Event> updateEvent (@ResponseBody Event event, @PathVariable(value = "id")long id) {
+	public ResponseEntity<Event> updateEvent (@RequestBody Event event, @PathVariable(value = "id")long id) {
 		try {
 			Optional<Event> event1 = eventService.get(id);
 			if (event1.isPresent()){
