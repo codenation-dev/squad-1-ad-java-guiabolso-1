@@ -68,8 +68,9 @@ public class EventsController {
 				event.setId(event1.get().getId());
 				return new ResponseEntity<>((Event) eventService.update(event),HttpStatus.OK);
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}catch (Exception e){
-
+			return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 }
