@@ -9,15 +9,18 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.guiabolso.centraldeerros.entity.Event;
 import br.com.guiabolso.centraldeerros.service.EventService;
 import br.com.guiabolso.centraldeerros.specification.EventEnumSpecification;
 import br.com.guiabolso.centraldeerros.specification.EventStringSpecification;
 
+import javax.validation.Valid;
+import java.util.Optional;
+
 @Controller
+@RequestMapping("/event")
 public class EventsController {
 	@Autowired
 	EventService eventService;
@@ -36,6 +39,38 @@ public class EventsController {
 			return new ResponseEntity<Page<Event>>(eventService.findAll(specifications, pageable), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Optional<Event>> getEventById(@PathVariable(value = "id")long id){
+		try {
+			return new ResponseEntity<>((Optional<Event>) eventService.get(id), HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PostMapping
+	public ResponseEntity<Event> addEvent(@Valid @RequestBody Event event) {
+		try {
+			return ResponseEntity.status(HttpStatus.CREATED).body(event);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PutMapping ("/{id}")
+	public ResponseEntity<Event> updateEvent (@RequestBody Event event, @PathVariable(value = "id")long id) {
+		try {
+			Optional<Event> event1 = eventService.get(id);
+			if (event1.isPresent()){
+				event.setId(event1.get().getId());
+				return new ResponseEntity<>((Event) eventService.update(event),HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}catch (Exception e){
+			return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 }
