@@ -22,6 +22,7 @@ public class AccountController {
     @Autowired
     AccountService accountService;
     
+    @Autowired
     AccountDTO accountDTO;
     
     @Autowired

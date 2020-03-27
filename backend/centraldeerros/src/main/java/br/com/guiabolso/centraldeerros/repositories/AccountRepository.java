@@ -1,5 +1,6 @@
 package br.com.guiabolso.centraldeerros.repositories;
 
+import br.com.guiabolso.centraldeerros.dto.AccountDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.guiabolso.centraldeerros.entity.Account;

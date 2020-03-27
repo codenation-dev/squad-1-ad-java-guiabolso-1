@@ -57,6 +57,12 @@ public class AccountService {
 
         return new org.springframework.security.core.userdetails.User(account.getUsername(), account.getPassword(), null);
     }
+  
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
+
 
     public void save(Account account) {
         account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
