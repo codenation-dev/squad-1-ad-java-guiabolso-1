@@ -13,6 +13,10 @@ public class AccountService {
     @Autowired
     AccountRepository accountRepository;
 
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
 
     public void saveAccount(Account account) {
         accountRepository.save(account);

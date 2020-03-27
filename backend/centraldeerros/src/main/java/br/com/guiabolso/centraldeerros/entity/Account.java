@@ -42,9 +42,21 @@ public class Account {
     @Size(max = 100)
 	private String email;
 
-	@Column(name = "created_at", nullable = false, updatable = false)
+	@Column(name = "created_at")
 	@CreatedDate
 	private LocalDateTime createdAt;
+
+	public Account(@NotNull @Size(max = 100) String username, @NotNull @Size(max = 100) String password, @Email @NotNull @Size(max = 100) String email, LocalDateTime createdAt) {
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.createdAt = createdAt;
+	}
+
+	public Account() {
+	}
+
+
 
 	public long getId() {
 		return id;
