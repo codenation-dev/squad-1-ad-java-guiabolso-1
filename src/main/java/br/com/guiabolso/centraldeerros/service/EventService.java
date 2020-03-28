@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import br.com.guiabolso.centraldeerros.entity.Event;
 import br.com.guiabolso.centraldeerros.repositories.EventRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 public class EventService {
