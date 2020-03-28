@@ -1,13 +1,23 @@
 package br.com.guiabolso.centraldeerros.entity;
 
 import br.com.guiabolso.centraldeerros.enums.LevelEnum;
-
-import java.util.Calendar;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
+@Data
+@Getter
+@Setter
+@AllArgsConstructor
 @Entity
 @Table(name = "event")
 public class Event {
@@ -35,69 +45,29 @@ public class Event {
 	@NotNull
 	@Size(max = 100)
 	private String origin;
-	
-	@Column(name = "date", nullable = false)
-	@NotNull
-	private Calendar date;
-	
+
 	@Column(name = "environment", length = 100, nullable = false)
 	@NotNull
 	@Size(max = 100)
 	private String environment;
 
-	public long getId() {
-		return id;
+	@Column
+	@Min(0L)
+	private Long quantity = 0L;
+
+	@Column
+	private Boolean archive = false;
+
+	@Column(name = "modified_at", nullable = false)
+	@LastModifiedDate
+	private LocalDateTime modifiedAt;
+
+	@Column(name = "created_at", nullable = false, updatable = false)
+	@CreatedDate
+	private LocalDateTime createdAt;
+
+	public LocalDateTime getModifiedAt() {
+		return modifiedAt;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public LevelEnum getLevelEnum() {
-		return levelEnum;
-	}
-
-	public void setLevelEnum(LevelEnum levelEnum) {
-		this.levelEnum = levelEnum;
-	}
-
-	public String getLog() {
-		return log;
-	}
-
-	public void setLog(String log) {
-		this.log = log;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getOrigin() {
-		return origin;
-	}
-
-	public void setOrigin(String origin) {
-		this.origin = origin;
-	}
-
-	public Calendar getDate() {
-		return date;
-	}
-
-	public void setDate(Calendar date) {
-		this.date = date;
-	}
-
-	public String getEnvironment() {
-		return environment;
-	}
-
-	public void setEnvironment(String environment) {
-		this.environment = environment;
-	}
 }
