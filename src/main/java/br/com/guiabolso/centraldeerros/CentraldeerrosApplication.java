@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import br.com.guiabolso.centraldeerros.repositories.AccountRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,37 +27,22 @@ public class CentraldeerrosApplication {
 		System.out.println("\naplicação rodando ============== banco conectado");
 	}
 
-//	@Bean
-//	CommandLineRunner runnerAccount(AccountService accountService) {
-//		return args -> {
-//			ObjectMapper mapper = new ObjectMapper();
-//			TypeReference<List<Account>> typeReference = new TypeReference<List<Account>>(){};
-//			InputStream inputStream = TypeReference.class.getResourceAsStream("/json/accounts.json");
-//			try {
-//				List<Account> accounts = mapper.readValue(inputStream,typeReference);
-//				accountService.save(accounts);
-//				System.out.println("Accounts Saved!");
-//			} catch (IOException e){
-//				System.out.println("Unable to save accounts: " + e.getMessage());
-//			}
-//
-//		};
-//	}
-//
-//	@Bean
-//	CommandLineRunner runnerEvent(EventService eventService) {
-//		return args -> {
-//			ObjectMapper mapper = new ObjectMapper();
-//			TypeReference<List<Event>> typeReference = new TypeReference<List<Event>>(){};
-//			InputStream inputStream = TypeReference.class.getResourceAsStream("/json/events.json");
-//			try {
-//				List<Event> events = mapper.readValue(inputStream,typeReference);
-//				eventService.save(events);
-//				System.out.println("Events Saved!");
-//			} catch (IOException e){
-//				System.out.println("Unable to save events: " + e.getMessage());
-//			}
-//		};
-//	}
-//
+	@Bean
+	public CommandLineRunner commandLineRunner(AccountRepository accountRepository) throws Exception {
+		return (String[] args) -> {
+			Account user1 = new Account();
+			Account user2 = new Account();
+
+			user1.setUsername("Amanda");
+			user1.setPassword("123456");
+			user1.setEmail("amanda@domain.com");
+
+			user2.setUsername("Eve");
+			user2.setPassword("password");
+			user2.setEmail("evee@domain.com");
+
+			accountRepository.save(user1);
+			accountRepository.save(user2);
+		};
+	}
 }
