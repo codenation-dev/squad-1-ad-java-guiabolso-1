@@ -13,8 +13,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findById(Long id);
 
     @Query("select a from Account a where a.email= ?1")
-    Optional<Account> findByEmail(String email);
-    
-    Account findByUsername(String username);
+    Optional<Account> findByEmail(String email);    
+    Optional<Account> findByUsername(String username);
     
 }

@@ -3,8 +3,9 @@ package br.com.guiabolso.centraldeerros.entity;
 import br.com.guiabolso.centraldeerros.enums.LevelEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -15,59 +16,57 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
-@Getter
-@Setter
 @AllArgsConstructor
 @Entity
 @Table(name = "event")
 public class Event {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 	
 	@Column(name = "level", length = 30, nullable = false)
-	@NotNull
+	@NotNull(message = "Please provide a level")
 	@Enumerated(EnumType.STRING)
 	private LevelEnum levelEnum;
 	
 	@Column(name = "log", length = 255, nullable = false)
-	@NotNull
+	@NotNull(message = "Please provide a log")
 	@Size(max = 255)
 	private String log;
 	
 	@Column(name = "description", length = 255, nullable = false)
-	@NotNull
+	@NotNull(message = "Please provide a description")
 	@Size(max = 255)
 	private String description;
 	
 	@Column(name = "origin", length = 100, nullable = false)
-	@NotNull
+	@NotNull(message = "Please provide an origin")
 	@Size(max = 100)
 	private String origin;
 
 	@Column(name = "environment", length = 100, nullable = false)
-	@NotNull
+	@NotNull(message = "Please provide an environment")
 	@Size(max = 100)
 	private String environment;
 
 	@Column
-	@Min(0L)
+	@Min(value = 0L, message = "Quantity cannot be negative")
 	private Long quantity = 0L;
 
 	@Column
-	private Boolean archive = false;
+	private boolean archived = false;
 
 	@Column(name = "modified_at", nullable = false)
 	@LastModifiedDate
+    @UpdateTimestamp
 	private LocalDateTime modifiedAt;
 
 	@Column(name = "created_at", nullable = false, updatable = false)
 	@CreatedDate
+	@CreationTimestamp
 	private LocalDateTime createdAt;
-
-	public LocalDateTime getModifiedAt() {
-		return modifiedAt;
-	}
+	
+	public Event() {}
 
 }

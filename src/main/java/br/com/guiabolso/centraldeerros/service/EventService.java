@@ -14,20 +14,20 @@ import java.util.Optional;
 public class EventService {
 	@Autowired
     EventRepository eventRepository;
+	
 	public Page<Event> findAll(Specification<Event> spec, Pageable pageable){
 		return eventRepository.findAll(spec, pageable);
 	}
-	public Event save(Event object) {
-		return eventRepository.save((Event) object);
+	public Event save(Event event) {
+		return eventRepository.save(event);
 	}
-
 
 	public Optional<Event> findById(Long id) {
 		return eventRepository.findById(id);
 	}
 
-	public Event update(Event object){
-		return eventRepository.save((Event) object);
+	public Event update(Event event){
+		return eventRepository.save(event);
 	}
 
 
