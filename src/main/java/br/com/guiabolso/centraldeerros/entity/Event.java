@@ -1,10 +1,7 @@
 package br.com.guiabolso.centraldeerros.entity;
 
 import br.com.guiabolso.centraldeerros.enums.LevelEnum;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -19,6 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @Entity
+@NoArgsConstructor
 @Table(name = "event")
 public class Event {
 
@@ -27,27 +25,22 @@ public class Event {
 	private long id;
 	
 	@Column(name = "level", length = 30, nullable = false)
-	@NotNull
 	@Enumerated(EnumType.STRING)
 	private LevelEnum levelEnum;
 	
 	@Column(name = "log", length = 255, nullable = false)
-	@NotNull
 	@Size(max = 255)
 	private String log;
 	
 	@Column(name = "description", length = 255, nullable = false)
-	@NotNull
 	@Size(max = 255)
 	private String description;
 	
 	@Column(name = "origin", length = 100, nullable = false)
-	@NotNull
 	@Size(max = 100)
 	private String origin;
 
 	@Column(name = "environment", length = 100, nullable = false)
-	@NotNull
 	@Size(max = 100)
 	private String environment;
 
@@ -58,16 +51,22 @@ public class Event {
 	@Column
 	private Boolean archive = false;
 
-	@Column(name = "modified_at", nullable = false)
+	@Column(name = "modified_at")
 	@LastModifiedDate
 	private LocalDateTime modifiedAt;
 
-	@Column(name = "created_at", nullable = false, updatable = false)
+	@Column(name = "created_at", updatable = false)
 	@CreatedDate
 	private LocalDateTime createdAt;
 
-	public LocalDateTime getModifiedAt() {
-		return modifiedAt;
+	@PrePersist
+	public void prePersist(){
+		this.createdAt = LocalDateTime.now();
+	}
+	@PreUpdate
+	public void preUpdate(){
+		this.modifiedAt = LocalDateTime.now();
 	}
 
 }
+

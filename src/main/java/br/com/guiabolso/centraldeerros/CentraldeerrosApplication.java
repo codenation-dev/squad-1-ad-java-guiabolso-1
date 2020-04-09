@@ -1,22 +1,14 @@
 package br.com.guiabolso.centraldeerros;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-
+import br.com.guiabolso.centraldeerros.entity.Account;
+import br.com.guiabolso.centraldeerros.entity.Event;
+import br.com.guiabolso.centraldeerros.enums.LevelEnum;
 import br.com.guiabolso.centraldeerros.repositories.AccountRepository;
+import br.com.guiabolso.centraldeerros.repositories.EventRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import br.com.guiabolso.centraldeerros.service.AccountService;
-import br.com.guiabolso.centraldeerros.service.EventService;
-import br.com.guiabolso.centraldeerros.entity.Account;
-import br.com.guiabolso.centraldeerros.entity.Event;
 
 @SpringBootApplication
 public class CentraldeerrosApplication {
@@ -28,7 +20,7 @@ public class CentraldeerrosApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(AccountRepository accountRepository) throws Exception {
+	public CommandLineRunner newAccount(AccountRepository accountRepository) throws Exception {
 		return (String[] args) -> {
 			Account user1 = new Account();
 			Account user2 = new Account();
@@ -43,6 +35,20 @@ public class CentraldeerrosApplication {
 
 			accountRepository.save(user1);
 			accountRepository.save(user2);
+		};
+	}
+
+	@Bean
+	public CommandLineRunner commandLineRunner(EventRepository eventRepository) throws Exception {
+		return (String[] args) -> {
+			Event event = new Event();
+			event.setLevelEnum(LevelEnum.find("warning"));
+			event.setDescription("user.SErvice.Auth: password.Password.Compare: crypto/bcrypt");
+			event.setEnvironment("Produção");
+			event.setLog("Error log description");
+			event.setOrigin("127.0.0.1");
+
+			eventRepository.save(event);
 		};
 	}
 }

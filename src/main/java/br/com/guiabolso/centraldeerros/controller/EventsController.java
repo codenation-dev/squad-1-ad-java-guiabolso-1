@@ -1,6 +1,8 @@
 package br.com.guiabolso.centraldeerros.controller;
 
+import br.com.guiabolso.centraldeerros.dto.EventDTO;
 import br.com.guiabolso.centraldeerros.entity.Event;
+import br.com.guiabolso.centraldeerros.mapper.EventMapper;
 import br.com.guiabolso.centraldeerros.service.EventService;
 import br.com.guiabolso.centraldeerros.specification.EventEnumSpecification;
 import br.com.guiabolso.centraldeerros.specification.EventStringSpecification;
@@ -15,17 +17,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.Optional;
+import static org.springframework.http.ResponseEntity.status;
 
 @Controller
-@RequestMapping("centralerros/event")
+@RequestMapping("centralerros/events")
 public class EventsController {
 	@Autowired
     EventService eventService;
+	EventMapper eventMapper;
 
-	@GetMapping(value = "/event", produces = "application/json")
-	public ResponseEntity<Page<Event>> getEvent(@RequestParam(value = "level", required = false) String level,
+	@GetMapping(produces = "application/json")
+	public ResponseEntity<Page<EventDTO>> getEvent(@RequestParam(value = "level", required = false) String level,
                                                 @RequestParam(value = "environment", required = false) String environment,
                                                 @RequestParam(value = "origin", required = false) String origin,
                                                 @RequestParam(value = "description", required = false) String description,
@@ -35,42 +37,39 @@ public class EventsController {
 					.and(new EventStringSpecification("environment", environment))
 					.and(new EventStringSpecification("origin", origin))
 					.and(new EventStringSpecification("description", description));
-			return new ResponseEntity(eventService.findAll(specifications, pageable), HttpStatus.OK);
+			return new ResponseEntity<>(EventMapper.toPageDTO(eventService.findAll(specifications, pageable)),
+					HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Event>> findById(@PathVariable(value = "id")long id){
+	@GetMapping("/event/{id}")
+	public ResponseEntity<EventDTO> findById(@PathVariable(value = "id") Long id) {
 		try {
-			return new ResponseEntity<>(eventService.findById(id), HttpStatus.OK);
-		}catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	@PostMapping
-	public ResponseEntity<Event> create(@Valid @RequestBody Event event) {
-		try {
-			this.eventService.save(event);
-			return ResponseEntity.status(HttpStatus.CREATED).body(event);
+			return new ResponseEntity<>((eventService.findById(id)), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
-	@PutMapping ("/{id}")
-	public ResponseEntity<Event> updateEvent (@RequestBody Event event, @PathVariable(value = "id")long id) {
+	@PostMapping("/event")
+	public ResponseEntity<Event> create(@RequestBody Event event) {
 		try {
-			Optional<Event> event1 = eventService.findById(id);
-			if (event1.isPresent()){
-				event.setId(event1.get().getId());
-				return new ResponseEntity<>(eventService.update(event),HttpStatus.OK);
-			}
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}catch (Exception e){
-			return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			this.eventService.save(event);
+			return status(HttpStatus.CREATED).body(event);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PatchMapping ("/event/{id}")
+	public ResponseEntity<Event> updateEvent (@RequestBody EventDTO eventDTO, @PathVariable Long id) {
+		try {
+			this.eventService.update(eventDTO, id);
+				return ResponseEntity.ok().build();
+		} catch(Exception e) {
+			return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 }
