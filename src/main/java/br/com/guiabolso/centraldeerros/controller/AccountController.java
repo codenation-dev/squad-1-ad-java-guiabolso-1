@@ -2,67 +2,58 @@ package br.com.guiabolso.centraldeerros.controller;
 
 import br.com.guiabolso.centraldeerros.entity.Account;
 import br.com.guiabolso.centraldeerros.service.AccountService;
-import br.com.guiabolso.centraldeerros.validation.AccountValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/centralerros/account")
+@RequestMapping("/api/account")
 public class AccountController {
 	
     @Autowired
     AccountService accountService;
 
-    @Autowired
-    private AccountValidator accountValidator;
-
-    @PostMapping
+    @PostMapping(produces = "application/json")
     public ResponseEntity<Account> saveAccount(@Valid @RequestBody Account account){
-        try{
-            this.accountService.saveAccount(account);
-            return ResponseEntity.status(HttpStatus.CREATED).body(account);
+        try{            
+            return new ResponseEntity<Account>(accountService.save(account), HttpStatus.CREATED);
         } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
-    @GetMapping("/registration")
-    public String register(Model model)
-    {
-    	model.addAttribute("accountForm", new Account());
-    	return "registration";
-    }
-    
-    @PostMapping("/registration")
-    public String register(@ModelAttribute("accountForm") Account accountForm, BindingResult bindingResult)
-    {
-    	accountValidator.validate(accountForm, bindingResult);
-    	if (bindingResult.hasErrors())
-    		return "registration";
-    	
-    	accountService.save(accountForm);
-    	accountService.doLogin(accountForm.getUsername(), accountForm.getPassword());
-    	
-    	return "redirect:/welcome";
-    }
-
-    @GetMapping("/login")
-    public String login(Model model, String error, String logout) {
-        if (error != null)
-            model.addAttribute("error", "Usuario e senha invalidos.");
-
-        if (logout != null)
-            model.addAttribute("message", "Voce foi deslogado com sucesso.");
-
-        return "login";
-    }
-
+    @GetMapping("/{id}")
+	public ResponseEntity<Account> getAccount(@PathVariable(value = "id") Long id) {
+		try {
+			Optional<Account> account = accountService.findById(id);
+			if (account.isPresent()) {
+				return new ResponseEntity<Account>(account.get(), HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PutMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
+	public ResponseEntity<Account> updateAccount(@Valid @RequestBody Account accountUpdated, @PathVariable(value = "id") Long id) {
+		try {
+			Optional<Account> account = accountService.findById(id);
+			if (account.isPresent()) {
+				accountUpdated.setId(account.get().getId());
+				accountUpdated.setCreatedAt(account.get().getCreatedAt());
+				return new ResponseEntity<Account>(accountService.save(accountUpdated), HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }
 

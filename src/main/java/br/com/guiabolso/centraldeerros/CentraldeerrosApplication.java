@@ -1,48 +1,50 @@
 package br.com.guiabolso.centraldeerros;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
+import br.com.guiabolso.centraldeerros.entity.Account;
+import br.com.guiabolso.centraldeerros.entity.Event;
+import br.com.guiabolso.centraldeerros.enums.LevelEnum;
+import br.com.guiabolso.centraldeerros.service.AccountService;
+import br.com.guiabolso.centraldeerros.service.EventService;
 
-import br.com.guiabolso.centraldeerros.repositories.AccountRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import br.com.guiabolso.centraldeerros.service.AccountService;
-import br.com.guiabolso.centraldeerros.service.EventService;
-import br.com.guiabolso.centraldeerros.entity.Account;
-import br.com.guiabolso.centraldeerros.entity.Event;
 
 @SpringBootApplication
 public class CentraldeerrosApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CentraldeerrosApplication.class, args);
-
 		System.out.println("\naplicação rodando ============== banco conectado");
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(AccountRepository accountRepository) throws Exception {
+	public CommandLineRunner newAccount(AccountService accountService) throws Exception {
 		return (String[] args) -> {
-			Account user1 = new Account();
-			Account user2 = new Account();
+			if(accountService.isEmpty()) {
+				Account user = new Account();
+	
+				user.setUsername("admin");
+				user.setPassword("admin");
+				user.setEmail("admin@email.com");
+	
+				accountService.save(user);
+			}
+		};
+	}
 
-			user1.setUsername("Amanda");
-			user1.setPassword("123456");
-			user1.setEmail("amanda@domain.com");
+	@Bean
+	public CommandLineRunner commandLineRunner(EventService eventService) throws Exception {
+		return (String[] args) -> {
+			Event event = new Event();
+			event.setLevelEnum(LevelEnum.find("warning"));
+			event.setDescription("user.SErvice.Auth: password.Password.Compare: crypto/bcrypt");
+			event.setEnvironment("production");
+			event.setLog("Error log description");
+			event.setOrigin("127.0.0.1");
 
-			user2.setUsername("Eve");
-			user2.setPassword("password");
-			user2.setEmail("evee@domain.com");
-
-			accountRepository.save(user1);
-			accountRepository.save(user2);
+			eventService.save(event);
 		};
 	}
 }
