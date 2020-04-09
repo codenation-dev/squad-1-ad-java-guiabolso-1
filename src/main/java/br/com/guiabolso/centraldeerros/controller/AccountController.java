@@ -1,8 +1,6 @@
 package br.com.guiabolso.centraldeerros.controller;
 
 import br.com.guiabolso.centraldeerros.entity.Account;
-import br.com.guiabolso.centraldeerros.payload.AccountCredentials;
-import br.com.guiabolso.centraldeerros.secutiry.TokenAuthenticationService;
 import br.com.guiabolso.centraldeerros.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,16 +8,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/api/account")
 public class AccountController {
 	
     @Autowired
     AccountService accountService;
 
-    @PostMapping(value = "/account", produces = "application/json")
+    @PostMapping(produces = "application/json")
     public ResponseEntity<Account> saveAccount(@Valid @RequestBody Account account){
         try{            
             return new ResponseEntity<Account>(accountService.save(account), HttpStatus.CREATED);
@@ -28,14 +28,29 @@ public class AccountController {
         }
     }
     
-    @PostMapping(value = "/login", produces = "text/plain", consumes = "application/json")
-	public ResponseEntity<String> login(@Valid @RequestBody AccountCredentials account) {
+    @GetMapping("/{id}")
+	public ResponseEntity<Account> getAccount(@PathVariable(value = "id") Long id) {
 		try {
-			if (accountService.hasAccount(account)) {
-				String token = TokenAuthenticationService.create(account.getUsername());
-				return new ResponseEntity<String>(token, HttpStatus.OK);
+			Optional<Account> account = accountService.findById(id);
+			if (account.isPresent()) {
+				return new ResponseEntity<Account>(account.get(), HttpStatus.OK);
 			}
-			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PutMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
+	public ResponseEntity<Account> updateAccount(@Valid @RequestBody Account accountUpdated, @PathVariable(value = "id") Long id) {
+		try {
+			Optional<Account> account = accountService.findById(id);
+			if (account.isPresent()) {
+				accountUpdated.setId(account.get().getId());
+				accountUpdated.setCreatedAt(account.get().getCreatedAt());
+				return new ResponseEntity<Account>(accountService.save(accountUpdated), HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
