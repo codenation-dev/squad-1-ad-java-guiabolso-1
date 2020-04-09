@@ -20,18 +20,18 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.ResponseEntity.status;
 
 @Controller
-@RequestMapping("centralerros/events")
+@RequestMapping("api/event")
 public class EventsController {
 	@Autowired
-    EventService eventService;
+	EventService eventService;
 	EventMapper eventMapper;
 
 	@GetMapping(produces = "application/json")
 	public ResponseEntity<Page<EventDTO>> getEvent(@RequestParam(value = "level", required = false) String level,
-                                                @RequestParam(value = "environment", required = false) String environment,
-                                                @RequestParam(value = "origin", required = false) String origin,
-                                                @RequestParam(value = "description", required = false) String description,
-                                                @PageableDefault(value = 100, page = 0, direction = Direction.ASC, sort = "id") Pageable pageable) {
+												   @RequestParam(value = "environment", required = false) String environment,
+												   @RequestParam(value = "origin", required = false) String origin,
+												   @RequestParam(value = "description", required = false) String description,
+												   @PageableDefault(value = 100, page = 0, direction = Direction.ASC, sort = "id") Pageable pageable) {
 		try {
 			Specification<Event> specifications = Specification.where(new EventEnumSpecification("levelEnum", level))
 					.and(new EventStringSpecification("environment", environment))
@@ -44,7 +44,7 @@ public class EventsController {
 		}
 	}
 
-	@GetMapping("/event/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<EventDTO> findById(@PathVariable(value = "id") Long id) {
 		try {
 			return new ResponseEntity<>((eventService.findById(id)), HttpStatus.OK);
@@ -53,7 +53,7 @@ public class EventsController {
 		}
 	}
 
-	@PostMapping("/event")
+	@PostMapping
 	public ResponseEntity<Event> create(@RequestBody Event event) {
 		try {
 			this.eventService.save(event);
@@ -63,13 +63,23 @@ public class EventsController {
 		}
 	}
 
-	@PatchMapping ("/event/{id}")
-	public ResponseEntity<Event> updateEvent (@RequestBody EventDTO eventDTO, @PathVariable Long id) {
+//	@PatchMapping("/{id}")
+//	public ResponseEntity<Event> updateEvent(@RequestBody EventDTO eventDTO, @PathVariable Long id) {
+//		try {
+//			this.eventService.update(eventDTO, id);
+//			return ResponseEntity.ok().build();
+//		} catch (Exception e) {
+//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//		}
+//	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<HttpStatus> deleteEvent(@PathVariable Long id) {
 		try {
-			this.eventService.update(eventDTO, id);
-				return ResponseEntity.ok().build();
-		} catch(Exception e) {
-			return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			this.eventService.deleteEvent(id);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 }

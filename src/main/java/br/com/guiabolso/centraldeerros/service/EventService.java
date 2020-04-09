@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class EventService {
 	@Autowired
@@ -35,6 +37,10 @@ public class EventService {
 		eventDTO.setId(id);
 		Event event = EventMapper.toEvent(eventDTO);
 		eventRepository.save(event);
+	}
+
+	public void deleteEvent(Long id){
+		eventRepository.deleteById(id);
 	}
 
 
