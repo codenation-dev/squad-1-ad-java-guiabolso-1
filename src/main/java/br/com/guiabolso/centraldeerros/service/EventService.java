@@ -1,7 +1,10 @@
 package br.com.guiabolso.centraldeerros.service;
 
+import br.com.guiabolso.centraldeerros.dto.EventDTO;
 import br.com.guiabolso.centraldeerros.entity.Event;
+import br.com.guiabolso.centraldeerros.mapper.EventMapper;
 import br.com.guiabolso.centraldeerros.repositories.EventRepository;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +33,7 @@ public class EventService {
 		return eventRepository.save(event);
 	}
 
-
-
+	public void deleteEvent(Long id){
+		eventRepository.deleteById(id);
+	}
 }

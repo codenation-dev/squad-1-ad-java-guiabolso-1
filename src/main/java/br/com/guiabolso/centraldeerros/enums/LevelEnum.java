@@ -16,7 +16,7 @@ public enum LevelEnum {
     
     public static LevelEnum find(String value) {
     	for (LevelEnum level : LevelEnum.values()) {
-    		if(value.compareTo(level.levelEnum) == 0)
+    		if(value.equalsIgnoreCase((level.levelEnum)))
     			return level;
         }
     	return null;

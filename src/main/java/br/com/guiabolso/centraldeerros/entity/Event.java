@@ -3,6 +3,7 @@ package br.com.guiabolso.centraldeerros.entity;
 import br.com.guiabolso.centraldeerros.enums.LevelEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @Entity
+@NoArgsConstructor
 @Table(name = "event")
 public class Event {
 
@@ -57,16 +59,15 @@ public class Event {
 	@Column
 	private boolean archived = false;
 
-	@Column(name = "modified_at", nullable = false)
+	@Column(name = "modified_at")
 	@LastModifiedDate
     @UpdateTimestamp
 	private LocalDateTime modifiedAt;
 
-	@Column(name = "created_at", nullable = false, updatable = false)
+	@Column(name = "created_at", updatable = false)
 	@CreatedDate
 	@CreationTimestamp
 	private LocalDateTime createdAt;
-	
-	public Event() {}
 
 }
+

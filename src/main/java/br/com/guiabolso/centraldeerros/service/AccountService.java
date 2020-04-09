@@ -38,4 +38,8 @@ public class AccountService {
 		}
 		return false;
 	}
+
+	public boolean isEmpty() {
+		return (accountRepository.count() == 0);
+	}
 }
