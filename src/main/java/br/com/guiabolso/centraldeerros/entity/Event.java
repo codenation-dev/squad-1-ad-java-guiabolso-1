@@ -1,103 +1,73 @@
 package br.com.guiabolso.centraldeerros.entity;
 
 import br.com.guiabolso.centraldeerros.enums.LevelEnum;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Calendar;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
+@Data
+@AllArgsConstructor
 @Entity
+@NoArgsConstructor
 @Table(name = "event")
 public class Event {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 	
 	@Column(name = "level", length = 30, nullable = false)
-	@NotNull
+	@NotNull(message = "Please provide a level")
 	@Enumerated(EnumType.STRING)
 	private LevelEnum levelEnum;
 	
 	@Column(name = "log", length = 255, nullable = false)
-	@NotNull
+	@NotNull(message = "Please provide a log")
 	@Size(max = 255)
 	private String log;
 	
 	@Column(name = "description", length = 255, nullable = false)
-	@NotNull
+	@NotNull(message = "Please provide a description")
 	@Size(max = 255)
 	private String description;
 	
 	@Column(name = "origin", length = 100, nullable = false)
-	@NotNull
+	@NotNull(message = "Please provide an origin")
 	@Size(max = 100)
 	private String origin;
-	
-	@Column(name = "date", nullable = false)
-	@NotNull
-	private Calendar date;
-	
+
 	@Column(name = "environment", length = 100, nullable = false)
-	@NotNull
+	@NotNull(message = "Please provide an environment")
 	@Size(max = 100)
 	private String environment;
 
-	public long getId() {
-		return id;
-	}
+	@Column
+	@Min(value = 0L, message = "Quantity cannot be negative")
+	private Long quantity = 0L;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+	@Column
+	private boolean archived = false;
 
-	public LevelEnum getLevelEnum() {
-		return levelEnum;
-	}
+	@Column(name = "modified_at")
+	@LastModifiedDate
+    @UpdateTimestamp
+	private LocalDateTime modifiedAt;
 
-	public void setLevelEnum(LevelEnum levelEnum) {
-		this.levelEnum = levelEnum;
-	}
+	@Column(name = "created_at", updatable = false)
+	@CreatedDate
+	@CreationTimestamp
+	private LocalDateTime createdAt;
 
-	public String getLog() {
-		return log;
-	}
-
-	public void setLog(String log) {
-		this.log = log;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getOrigin() {
-		return origin;
-	}
-
-	public void setOrigin(String origin) {
-		this.origin = origin;
-	}
-
-	public Calendar getDate() {
-		return date;
-	}
-
-	public void setDate(Calendar date) {
-		this.date = date;
-	}
-
-	public String getEnvironment() {
-		return environment;
-	}
-
-	public void setEnvironment(String environment) {
-		this.environment = environment;
-	}
 }
+

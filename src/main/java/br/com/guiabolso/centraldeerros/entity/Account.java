@@ -1,103 +1,61 @@
 package br.com.guiabolso.centraldeerros.entity;
 
-import java.util.Calendar;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import lombok.Data;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
+@Data
 @Entity
 @Table(name = "account")
 @EntityListeners(AuditingEntityListener.class)
+
 public class Account {
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
-	
+
 	@Column(name = "username", length = 100, nullable = false)
-    @NotNull
+	@NotNull(message = "Please provide an username")
     @Size(max = 100)
 	private String username;
 	
 	@Column(name = "password", length = 100, nullable = false)
-    @NotNull
+	@NotNull(message = "Please provide a password")
     @Size(max = 100)
+	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	
 	@Column(name = "email", length = 100, nullable = false)
-	@Email
-    @NotNull
+	@Email(message = "E-mail not valid")
+	@NotNull(message = "Please provide an e-mail")
     @Size(max = 100)
 	private String email;
-	
-	@Column(name = "modified_at", nullable = false)
-    @LastModifiedDate
-    @Temporal(TemporalType.TIMESTAMP)
-	private Calendar modifiedAt;
-	
+
 	@Column(name = "created_at", nullable = false, updatable = false)
 	@CreatedDate
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar createdAt;
+	@CreationTimestamp
+	private LocalDateTime createdAt;
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
+	public Account(@NotNull @Size(max = 100) String username, @NotNull @Size(max = 100) String password, @Email @NotNull @Size(max = 100) String email) {
 		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public Calendar getModifiedAt() {
-		return modifiedAt;
+	public Account() {
 	}
 
-	public void setModifiedAt(Calendar modifiedAt) {
-		this.modifiedAt = modifiedAt;
-	}
-
-	public Calendar getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Calendar createdAt) {
-		this.createdAt = createdAt;
-	}
 }
