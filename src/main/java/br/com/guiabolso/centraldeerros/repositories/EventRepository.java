@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-	Page<Event> findAll(Specification<Event> spec, Pageable pageable);
+	Page<EventDTO> findAll(Specification<Event> spec, Pageable pageable);
 }
