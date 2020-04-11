@@ -21,8 +21,9 @@ public class EventDTO {
     private String log;
     private String description;
     private String origin;
-    private String environment;
+    private String environment;    
     private Long quantity = 0L;
+    private boolean archived;
     private LocalDateTime createdAt;
 
 }
