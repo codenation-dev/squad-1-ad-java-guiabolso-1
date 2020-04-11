@@ -5,6 +5,7 @@ import br.com.guiabolso.centraldeerros.entity.Event;
 import br.com.guiabolso.centraldeerros.mapper.EventMapper;
 import br.com.guiabolso.centraldeerros.repositories.EventRepository;
 import org.hibernate.ObjectNotFoundException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,18 +34,14 @@ public class EventService {
 		return EventMapper.toEventDTO(eventRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException("Evento não encontrado",Event.class.getName())));
 	}
 
-	public void update(EventDTO eventDTO, Long id){
-		eventDTO.setId(id);
-		Event event = EventMapper.toEvent(eventDTO);
-		eventRepository.save(event);
+	public Event update(EventDTO eventDTO, Long id){
+		Event event = EventMapper.toEvent(eventDTO, eventRepository.findById(id));
+		BeanUtils.copyProperties(eventDTO, event, "id");
+		return eventRepository.save(event);
 	}
 
 	public void deleteEvent(Long id){
 		eventRepository.deleteById(id);
 	}
-
-
-
-
 
 }

@@ -7,7 +7,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -68,5 +67,7 @@ public class Event {
 		this.modifiedAt = LocalDateTime.now();
 	}
 
+	public void get() {
+	}
 }
 

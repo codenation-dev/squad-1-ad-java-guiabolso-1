@@ -63,15 +63,11 @@ public class EventsController {
 		}
 	}
 
-//	@PatchMapping("/{id}")
-//	public ResponseEntity<Event> updateEvent(@RequestBody EventDTO eventDTO, @PathVariable Long id) {
-//		try {
-//			this.eventService.update(eventDTO, id);
-//			return ResponseEntity.ok().build();
-//		} catch (Exception e) {
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		}
-//	}
+	@PatchMapping(value = "/{id}")
+	public ResponseEntity<Event> updateEvent(@RequestBody EventDTO eventDTO, @PathVariable Long id) {
+			this.eventService.update(eventDTO, id);
+			return ResponseEntity.ok().build();
+	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<HttpStatus> deleteEvent(@PathVariable Long id) {
