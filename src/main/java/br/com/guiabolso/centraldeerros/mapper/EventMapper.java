@@ -21,6 +21,7 @@ public class EventMapper {
         eventDTO.setOrigin(event.getOrigin());
         eventDTO.setEnvironment(event.getEnvironment());
         eventDTO.setQuantity(event.getQuantity());
+        eventDTO.setArchived(event.isArchived());
         eventDTO.setCreatedAt(event.getCreatedAt());
 
         return eventDTO;
@@ -35,15 +36,14 @@ public class EventMapper {
         event.setOrigin(eventDTO.getOrigin());
         event.setEnvironment(eventDTO.getEnvironment());
         event.setQuantity(eventDTO.getQuantity());
+        event.setArchived(eventDTO.isArchived());
         event.setCreatedAt(eventDTO.getCreatedAt());
         return event;
     }
 
-    public static Page<EventDTO> toPageDTO(Page<Event> events) {
-        List<EventDTO> eventsDTO = events.stream()
+    public static List <EventDTO> toPageDTO(List<Event> events) {
+        return events.stream()
                 .map(EventMapper::toEventDTO)
                 .collect(Collectors.toList());
-        return new PageImpl<>(eventsDTO);
     }
-
 }

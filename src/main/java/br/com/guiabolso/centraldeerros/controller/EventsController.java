@@ -37,15 +37,16 @@ public class EventsController {
 												   @RequestParam(value = "origin", required = false) String origin,
 												   @RequestParam(value = "description", required = false) String description,
 												   @RequestParam(value = "archived", required = false) Boolean archived,
-												   @PageableDefault(value = 100, page = 0, direction = Direction.ASC, sort = "id") Pageable pageable) {
+												   @PageableDefault(value = 100, page = 0, direction =
+														   Direction.ASC,
+														   sort = "id") Pageable pageable) {
 		try {
 			Specification<Event> specifications = Specification.where(new EventEnumSpecification("levelEnum", level))
 					.and(new EventStringSpecification("environment", environment))
 					.and(new EventStringSpecification("origin", origin))
 					.and(new EventStringSpecification("description", description))
 					.and(new EventBooleanSpecification("archived", archived));
-			return new ResponseEntity<>(EventMapper.toPageDTO(eventService.findAll(specifications, pageable)),
-					HttpStatus.OK);
+			return new ResponseEntity<>((eventService.findAll(specifications, pageable)), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
