@@ -1,6 +1,7 @@
 package br.com.guiabolso.centraldeerros.entity;
 
 import br.com.guiabolso.centraldeerros.enums.LevelEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -60,8 +61,6 @@ public class Event {
 	private boolean archived = false;
 
 	@Column(name = "modified_at")
-	@LastModifiedDate
-    @UpdateTimestamp
 	private LocalDateTime modifiedAt;
 
 	@Column(name = "created_at", updatable = false)
