@@ -1,6 +1,7 @@
 package br.com.guiabolso.centraldeerros.dto;
 
 import br.com.guiabolso.centraldeerros.enums.LevelEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,9 @@ public class EventDTO {
     private Long quantity = 0L;
     private boolean archived;
     private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
+    public LocalDateTime modifiedAt () {
+        return LocalDateTime.now();
+    }
 }
