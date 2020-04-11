@@ -13,7 +13,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/api/account")
+@RequestMapping("/account")
 public class AccountController {
 	
     @Autowired
