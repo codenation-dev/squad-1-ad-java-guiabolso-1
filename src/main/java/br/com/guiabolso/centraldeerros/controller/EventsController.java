@@ -77,7 +77,7 @@ public class EventsController {
 	public ResponseEntity<EventDTO> updateEvent(@Valid @RequestBody EventDTO eventDTO, @PathVariable Long id){
 		try {
 			Event eventUpdated = eventService.updateEvent(eventDTO, id);
-			return status(HttpStatus.CREATED).body(eventMapper.map(eventUpdated));
+			return status(HttpStatus.ACCEPTED).body(eventMapper.map(eventUpdated));
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
