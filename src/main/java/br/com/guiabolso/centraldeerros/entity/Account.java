@@ -26,7 +26,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 
-	@Column(name = "username", length = 100, nullable = false)
+	@Column(name = "username", length = 100, nullable = false, unique = true)
 	@NotNull(message = "Please provide an username")
     @Size(max = 100)
 	private String username;

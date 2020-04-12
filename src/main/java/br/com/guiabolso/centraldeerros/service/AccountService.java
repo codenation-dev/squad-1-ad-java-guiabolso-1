@@ -1,8 +1,11 @@
 package br.com.guiabolso.centraldeerros.service;
 
 import br.com.guiabolso.centraldeerros.entity.Account;
+import br.com.guiabolso.centraldeerros.entity.Event;
 import br.com.guiabolso.centraldeerros.payload.AccountCredentials;
 import br.com.guiabolso.centraldeerros.repositories.AccountRepository;
+import lombok.AllArgsConstructor;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,11 +13,12 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class AccountService {
 
     @Autowired
     AccountRepository accountRepository;
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -23,12 +27,19 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public Optional<Account> findById(Long id) {
-        return accountRepository.findById(id);
+    public Account findById(Long id) {
+        return accountRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException(
+                "Account not found.", Account.class.getName()));
     }
 
     public Optional<Account> findByEmail (String email){
     	return accountRepository.findByEmail(email);
+	}
+
+
+    public Account findByUserName (String username){
+    	return accountRepository.findByUsername(username).orElseThrow(()-> new ObjectNotFoundException(
+                "Account not found.", Account.class.getName()));
 	}
 
 	public boolean hasAccount(AccountCredentials account) {
@@ -39,7 +50,4 @@ public class AccountService {
 		return false;
 	}
 
-	public boolean isEmpty() {
-		return (accountRepository.count() == 0);
-	}
 }
