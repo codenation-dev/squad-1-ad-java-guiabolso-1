@@ -37,7 +37,7 @@ public class AccountController {
         }
     }
 
-    @GetMapping("/user/{username}")
+    @GetMapping("/{username}")
     public ResponseEntity<Account> getAccountByUsername(@PathVariable String username) {
         try {
             return new ResponseEntity<>(accountService.findByUserName(username), HttpStatus.OK);

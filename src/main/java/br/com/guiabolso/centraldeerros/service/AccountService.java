@@ -44,7 +44,10 @@ public class AccountService {
 
 	public boolean hasAccount(AccountCredentials account) {
 		Optional<Account> existingAccount = accountRepository.findByUsername(account.getUsername());
-        return existingAccount.filter(value -> passwordEncoder.matches(account.getPassword(), value.getPassword())).isPresent();
-    }
+		if(existingAccount.isPresent()) {
+			return passwordEncoder.matches(account.getPassword(), existingAccount.get().getPassword());
+		}
+		return false;
+	}
 
 }
