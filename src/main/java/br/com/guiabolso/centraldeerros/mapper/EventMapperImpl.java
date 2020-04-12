@@ -48,7 +48,7 @@ public class EventMapperImpl implements EventMapper {
         if(eventDTO.getDescription() !=null) event.setDescription(eventDTO.getDescription());
         if(eventDTO.getEnvironment() !=null) event.setEnvironment(eventDTO.getEnvironment());
         if(eventDTO.getOrigin() !=null) event.setOrigin(eventDTO.getOrigin());
-        if(eventDTO.getQuantity() !=null) event.setQuantity(eventDTO.getQuantity());
+        if(eventDTO.getQuantity() !=0) event.setQuantity(eventDTO.getQuantity());
         event.setModifiedAt(eventDTO.modifiedAt());
 
         return event;
