@@ -55,7 +55,4 @@ public class Account {
 		this.email = email;
 	}
 
-	public Account() {
-	}
-
 }
