@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "account", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
+@Table(name = "account")
 @EntityListeners(AuditingEntityListener.class)
 
 public class Account {
