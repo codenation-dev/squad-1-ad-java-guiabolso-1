@@ -25,7 +25,7 @@ public class EventMapperImpl implements EventMapper {
         eventDTO.setOrigin(event.getOrigin());
         eventDTO.setEnvironment(event.getEnvironment());
         eventDTO.setQuantity(event.getQuantity());
-        eventDTO.setArchived(event.isArchived());
+        eventDTO.setArchived(event.getArchived());
         eventDTO.setCreatedAt(event.getCreatedAt());
         if(event.getModifiedAt() != null) eventDTO.setModifiedAt(event.getModifiedAt());
 
@@ -43,7 +43,7 @@ public class EventMapperImpl implements EventMapper {
     @Override
     public Event updateEvent(EventDTO eventDTO, @MappingTarget Event event) {
         if(eventDTO == null) return null;
-        if(eventDTO.isArchived()) event.setArchived(true);
+        if (eventDTO.getArchived() != null) event.setArchived(eventDTO.getArchived());
         if(eventDTO.getLevelEnum() != null) event.setLevelEnum(eventDTO.getLevelEnum());
         if(eventDTO.getDescription() !=null) event.setDescription(eventDTO.getDescription());
         if(eventDTO.getEnvironment() !=null) event.setEnvironment(eventDTO.getEnvironment());

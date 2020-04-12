@@ -58,7 +58,7 @@ public class Event {
 	private Long quantity = 0L;
 
 	@Column
-	private boolean archived = false;
+	private Boolean archived;
 
 	@Column(name = "modified_at")
 	private LocalDateTime modifiedAt;
@@ -68,5 +68,7 @@ public class Event {
 	@CreationTimestamp
 	private LocalDateTime createdAt;
 
+	public Event(Long id, LevelEnum level, String log, String description, String origin, String environment) {
+	}
 }
 

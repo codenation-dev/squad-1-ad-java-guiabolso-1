@@ -24,11 +24,12 @@ public class EventDTO {
     private String origin;
     private String environment;    
     private Long quantity = 0L;
-    private boolean archived;
+    private Boolean archived;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
     public LocalDateTime modifiedAt () {
         return LocalDateTime.now();
     }
+
 }
