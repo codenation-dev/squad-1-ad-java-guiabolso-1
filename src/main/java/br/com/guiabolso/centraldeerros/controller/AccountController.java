@@ -15,47 +15,45 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/api/account")
 public class AccountController {
-
+	
     @Autowired
     AccountService accountService;
 
     @PostMapping(produces = "application/json")
-    public ResponseEntity<Account> saveAccount(@Valid @RequestBody Account account) {
-        try {
+    public ResponseEntity<Account> saveAccount(@Valid @RequestBody Account account){
+        try{            
             return new ResponseEntity<Account>(accountService.save(account), HttpStatus.CREATED);
-        } catch (Exception e) {
+        } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    
     @GetMapping("/{id}")
-    public ResponseEntity<Account> getAccount(@PathVariable Long id) {
-        try {
-            return new ResponseEntity<>(accountService.findById(id), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/{username}")
-    public ResponseEntity<Account> getAccountByUsername(@PathVariable String username) {
-        try {
-            return new ResponseEntity<>(accountService.findByUserName(username), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PutMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<Account> updateAccount(@Valid @RequestBody Account accountUpdated, @PathVariable Long id) {
-        try {
-            Account account = accountService.findById(id);
-            accountUpdated.setId(account.getId());
-            accountUpdated.setCreatedAt(account.getCreatedAt());
-            return new ResponseEntity<>(accountService.save(accountUpdated), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+	public ResponseEntity<Account> getAccount(@PathVariable(value = "id") Long id) {
+		try {
+			Optional<Account> account = accountService.findById(id);
+			if (account.isPresent()) {
+				return new ResponseEntity<Account>(account.get(), HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PutMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
+	public ResponseEntity<Account> updateAccount(@Valid @RequestBody Account accountUpdated, @PathVariable(value = "id") Long id) {
+		try {
+			Optional<Account> account = accountService.findById(id);
+			if (account.isPresent()) {
+				accountUpdated.setId(account.get().getId());
+				accountUpdated.setCreatedAt(account.get().getCreatedAt());
+				return new ResponseEntity<Account>(accountService.save(accountUpdated), HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }
 
