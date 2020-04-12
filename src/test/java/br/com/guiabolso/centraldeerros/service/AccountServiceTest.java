@@ -35,7 +35,8 @@ public class AccountServiceTest {
     public void shouldReturnAccountById() {
         Account user1 = new Account("Amanda","123456", "amanda@domain.com");
         Mockito.<Optional<Account>>when(accountRepository.findById(1L)).thenReturn(Optional.of(user1));
-        Account account = accountService.findById(1L);
+        Optional<Account> account = accountService.findById(1L);
+        Assert.assertTrue(account.isPresent());
         Assert.assertEquals("Amanda", user1.getUsername());
     }
 
