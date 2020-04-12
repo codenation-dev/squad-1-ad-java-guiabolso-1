@@ -18,7 +18,7 @@ public class LoginController {
 	
     @Autowired
     AccountService accountService;
-    
+
     @PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
 	public ResponseEntity<JwtTokenResponse> login(@Valid @RequestBody AccountCredentials account) {
 		try {
