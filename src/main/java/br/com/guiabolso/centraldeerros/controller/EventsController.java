@@ -25,7 +25,7 @@ import static org.springframework.http.ResponseEntity.status;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/event")
+@RequestMapping("/api/event")
 public class EventsController {
 
 	@Autowired

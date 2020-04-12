@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/api/login")
 public class LoginController {
 	
     @Autowired
     AccountService accountService;
 
-	@CrossOrigin(origins = "https://squad1-guiabolso-api.herokuapp.com")
     @PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
 	public ResponseEntity<JwtTokenResponse> login(@Valid @RequestBody AccountCredentials account) {
 		try {

@@ -13,13 +13,12 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/account")
+@RequestMapping("/api/account")
 public class AccountController {
 	
     @Autowired
     AccountService accountService;
 
-	@CrossOrigin(origins = "https://squad1-guiabolso-api.herokuapp.com")
     @PostMapping(produces = "application/json")
     public ResponseEntity<Account> saveAccount(@Valid @RequestBody Account account){
         try{            
