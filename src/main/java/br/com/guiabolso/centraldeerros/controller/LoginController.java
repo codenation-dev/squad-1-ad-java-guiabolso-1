@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping("/login")
 public class LoginController {
 	
     @Autowired
