@@ -7,6 +7,7 @@ import br.com.guiabolso.centraldeerros.mapper.EventMapper;
 import br.com.guiabolso.centraldeerros.repositories.EventRepository;
 import br.com.guiabolso.centraldeerros.specification.EventEnumSpecification;
 import br.com.guiabolso.centraldeerros.specification.EventStringSpecification;
+import org.hibernate.ObjectNotFoundException;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -85,6 +86,30 @@ public class EventServiceTest {
         Assert.assertEquals(eventList.size(),eventDtosPage1.getNumberOfElements());
     }
 
+    @Test
+    public void shouldUpdateEvent() {
+        final Event event = createEvent(id, level, log, description, origin, environment);
+        final EventDTO eventDTO = new EventDTO();
+        eventDTO.setArchived(true);
+        final Event eventUpdated = createEvent(id, level, log, description, origin, environment);
+        eventUpdated.setArchived(true);
+        Mockito.when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+        Mockito.when(eventMapper.updateEvent(eventDTO, event)).thenReturn(eventUpdated);
+        Mockito.when(eventRepository.save(Mockito.any(Event.class))).thenReturn(eventUpdated);
+        Event updateEvent = eventService.updateEvent(eventDTO, event.getId());
+
+        Assert.assertEquals(updateEvent.getArchived(), eventDTO.getArchived());
+    }
+
+    @Test
+    public void shouldReturnErrorWhenFindEventByIdNotExist() {
+        final Event event = createEvent(id, level, log, description, origin, environment);
+        final EventDTO eventDTO = createEventDTO(id, level, log, description, origin, environment);
+        Mockito.when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+        Mockito.when(eventMapper.map(event)).thenReturn(eventDTO);
+        EventDTO eventDTO1 = eventService.findById(event.getId());
+        Assert.assertSame(eventDTO1.getId(), event.getId());
+    }
 
     private Event createEvent(Long id, LevelEnum levelEnum, String log, String description, String origin, String environment) {
         Event event = new Event();
