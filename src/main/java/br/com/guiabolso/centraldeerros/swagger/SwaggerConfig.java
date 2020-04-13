@@ -32,7 +32,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("Central de Erros")
                 .description("Aplicação Spring Boot REST API realizada por Squad 1")
-                .version("1.0.0")
+                .version("2.0.0")
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
                 .contact(new Contact("Squad1", "https://github.com/codenation-dev/squad-1-ad-java-guiabolso-1",null))
