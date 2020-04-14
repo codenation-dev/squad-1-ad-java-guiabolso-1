@@ -22,8 +22,3 @@ jobs:
       run: mvn -B package --file pom.xml
     - name: Tests
       run: mvn -B clean verify -Pintegration-test
-
-    - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
