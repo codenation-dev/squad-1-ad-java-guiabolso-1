@@ -10,12 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -32,10 +29,11 @@ public class EventService {
 		return eventRepository.findAll(spec, pageable);
 	}
 
-	private void findAllEventstoPage(){
+	public void findAllEventstoPage(){
 		List<Event> events = eventRepository.findAll();
 		eventMapper.toList(events);
 	}
+
 	public Event save(Event event) {
 		return eventRepository.save(event);
 	}
