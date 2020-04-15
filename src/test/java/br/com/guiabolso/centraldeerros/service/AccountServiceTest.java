@@ -11,7 +11,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 
@@ -46,8 +45,8 @@ public class AccountServiceTest {
         Mockito.when(passwordEncoder.encode(user1.getPassword())).thenReturn("Encoded password");
         Mockito.when(accountRepository.save(Mockito.any(Account.class))).thenReturn(user1);
         accountService.save(user1);
-
     }
+
     @Test
     public void shouldReturnAccountByEmail(){
         Account user1 = new Account("Amanda","123456", "amanda@domain.com");

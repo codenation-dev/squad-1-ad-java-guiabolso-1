@@ -2,7 +2,10 @@ package br.com.guiabolso.centraldeerros.mapper;
 
 import br.com.guiabolso.centraldeerros.dto.EventDTO;
 import br.com.guiabolso.centraldeerros.entity.Event;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Mappings;
 
 import java.util.List;
 
