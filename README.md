@@ -7,7 +7,8 @@
   * [Principais frameworks utilizados](#principais-frameworks-utilizados)
   * [Banco de dados](#banco-de-dados)
   * [Video exemplos](#video-exemplo)
-  * [Link Heroku](#link-heroku)
+  * [Link Heroku API](#link-heroku-api)
+  * [Link Heroku Frontend](#link-heroku-frontend)
   * [Postman](#postman)
 
 <!-- ABOUT THE PROJECT -->
@@ -33,9 +34,13 @@ Utilizado banco de dados relacional com Mapper e Data Transfer Object(DTO)
 A aplicação foi executada via postman e usado Workflow para PR's
 * [Video](https://youtu.be/l58-7OBj4_I)
 
-### Link Heroku
+### Link Heroku API
 Projeto hospedado no heroku e possui pipeline para controle de deploy.
-* [Heroku](https://squad1-guiabolso-api.herokuapp.com/)
+* [Heroku API](https://squad1-guiabolso-api.herokuapp.com/)
+
+### Link Heroku FRONTEND
+Projeto hospedado no heroku e possui pipeline para controle de deploy.
+* [Heroku Frontend](https://central-de-erros-frontend.herokuapp.com/)
 
 ### Postman
 Documentação referente às rotas e respostas
