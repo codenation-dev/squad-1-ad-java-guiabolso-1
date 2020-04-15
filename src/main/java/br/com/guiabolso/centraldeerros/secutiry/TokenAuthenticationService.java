@@ -1,11 +1,10 @@
 package br.com.guiabolso.centraldeerros.secutiry;
 
-import java.util.Date;
-
-import org.springframework.util.StringUtils;
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.util.StringUtils;
+
+import java.util.Date;
 
 public class TokenAuthenticationService {
 

@@ -1,7 +1,6 @@
 package br.com.guiabolso.centraldeerros.dto;
 
 import br.com.guiabolso.centraldeerros.enums.LevelEnum;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class EventDTO {
 
     private Long id;
@@ -32,4 +32,7 @@ public class EventDTO {
         return LocalDateTime.now();
     }
 
+    public EventDTO(Boolean archived) {
+        this.archived = archived;
+    }
 }

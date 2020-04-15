@@ -22,6 +22,8 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.Mockito.when;
+
 public class EventServiceTest {
 
     @Mock
@@ -42,7 +44,7 @@ public class EventServiceTest {
     @Test
     public void shouldSaveNewEvent() {
         final Event event = eventsMocks.createEvent();
-        Mockito.when(eventRepository.save(Mockito.any(Event.class))).thenReturn(event);
+        when(eventRepository.save(Mockito.any(Event.class))).thenReturn(event);
         eventService.save(event);
     }
 
@@ -50,8 +52,8 @@ public class EventServiceTest {
     public void shouldReturnEventById() {
         final Event event = eventsMocks.createEvent();
         final EventDTO eventDTO = eventsMocks.createEventDTO();
-        Mockito.when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-        Mockito.when(eventMapper.map(event)).thenReturn(eventDTO);
+        when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+        when(eventMapper.map(event)).thenReturn(eventDTO);
         EventDTO eventDTO1 = eventService.findById(event.getId());
         Assert.assertSame(eventDTO1.getId(), event.getId());
     }
@@ -64,10 +66,10 @@ public class EventServiceTest {
         String levelEnum = "error";
         Specification<Event> specifications = Specification.where(new EventEnumSpecification("levelEnum", levelEnum));
 
-        Mockito.when(eventRepository.findAll()).thenReturn(eventList);
-        Mockito.when(eventMapper.toList(eventList)).thenReturn(eventDTOList);
+        when(eventRepository.findAll()).thenReturn(eventList);
+        when(eventMapper.toList(eventList)).thenReturn(eventDTOList);
         Page<EventDTO> eventDtosPage = new PageImpl<>(eventDTOList, pageable, 0);
-        Mockito.when(eventRepository.findAll(specifications,pageable)).thenReturn(eventDtosPage);
+        when(eventRepository.findAll(specifications,pageable)).thenReturn(eventDtosPage);
         Page<EventDTO> eventDtosPage1 = eventService.findAll(specifications, pageable);
 
         Assert.assertEquals(eventDtosPage.getTotalPages(),eventDtosPage1.getTotalPages());
@@ -82,9 +84,9 @@ public class EventServiceTest {
         eventDTO.setArchived(true);
         final Event eventUpdated = eventsMocks.createEvent();
         eventUpdated.setArchived(true);
-        Mockito.when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-        Mockito.when(eventMapper.updateEvent(eventDTO, event)).thenReturn(eventUpdated);
-        Mockito.when(eventRepository.save(Mockito.any(Event.class))).thenReturn(eventUpdated);
+        when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+        when(eventMapper.updateEvent(eventDTO, event)).thenReturn(eventUpdated);
+        when(eventRepository.save(Mockito.any(Event.class))).thenReturn(eventUpdated);
         Event updateEvent = eventService.updateEvent(eventDTO, event.getId());
 
         Assert.assertEquals(updateEvent.getArchived(), eventDTO.getArchived());
@@ -94,8 +96,8 @@ public class EventServiceTest {
     public void shouldReturnErrorWhenFindEventByIdNotExist() {
         final Event event = eventsMocks.createEvent();
         final EventDTO eventDTO = eventsMocks.createEventDTO();
-        Mockito.when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
-        Mockito.when(eventMapper.map(event)).thenReturn(eventDTO);
+        when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+        when(eventMapper.map(event)).thenReturn(eventDTO);
         EventDTO eventDTO1 = eventService.findById(event.getId());
         Assert.assertSame(eventDTO1.getId(), event.getId());
     }

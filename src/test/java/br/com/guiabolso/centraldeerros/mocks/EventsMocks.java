@@ -3,6 +3,7 @@ package br.com.guiabolso.centraldeerros.mocks;
 import br.com.guiabolso.centraldeerros.dto.EventDTO;
 import br.com.guiabolso.centraldeerros.entity.Event;
 import br.com.guiabolso.centraldeerros.enums.LevelEnum;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -60,6 +61,14 @@ public class EventsMocks {
             eventDTOList.add(eventDTO);
         }
         return eventDTOList;
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

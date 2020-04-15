@@ -5,9 +5,7 @@ import br.com.guiabolso.centraldeerros.entity.Event;
 import org.mapstruct.MappingTarget;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -43,7 +41,7 @@ public class EventMapperImpl implements EventMapper {
     @Override
     public Event updateEvent(EventDTO eventDTO, @MappingTarget Event event) {
         if(eventDTO == null) return null;
-        if (eventDTO.getArchived() != null) event.setArchived(eventDTO.getArchived());
+        if(eventDTO.getArchived() != null) event.setArchived(eventDTO.getArchived());
         if(eventDTO.getLevelEnum() != null) event.setLevelEnum(eventDTO.getLevelEnum());
         if(eventDTO.getDescription() !=null) event.setDescription(eventDTO.getDescription());
         if(eventDTO.getEnvironment() !=null) event.setEnvironment(eventDTO.getEnvironment());

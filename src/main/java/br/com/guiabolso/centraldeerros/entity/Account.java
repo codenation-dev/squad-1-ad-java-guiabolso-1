@@ -1,14 +1,12 @@
 package br.com.guiabolso.centraldeerros.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -34,8 +32,8 @@ public class Account {
 	@Column(name = "password", length = 100, nullable = false)
 	@NotNull(message = "Please provide a password")
     @Size(max = 100)
-	@JsonIgnore
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	private String password;
 	
 	@Column(name = "email", length = 100, nullable = false)
@@ -49,7 +47,8 @@ public class Account {
 	@CreationTimestamp
 	private LocalDateTime createdAt;
 
-	public Account(@NotNull @Size(max = 100) String username, @NotNull @Size(max = 100) String password, @Email @NotNull @Size(max = 100) String email) {
+	@JsonCreator
+	public Account(@NotNull @Size(max = 100)@JsonProperty("username") String username, @NotNull @Size(max = 100) @JsonProperty("password") String password, @Email @NotNull @Size(max = 100) @JsonProperty("email") String email) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
