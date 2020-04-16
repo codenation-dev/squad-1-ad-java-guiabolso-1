@@ -6,9 +6,8 @@
 * [Sobre o projeto](#sobre-o-projeto)
   * [Principais frameworks utilizados](#principais-frameworks-utilizados)
   * [Banco de dados](#banco-de-dados)
-  * [Video exemplos](#video-exemplo)
-  * [Link Heroku API](#link-heroku-api)
-  * [Link Heroku Frontend](#link-heroku-frontend)
+  * [Videos exemplos](#videos-exemplos)
+  * [Links Heroku](#links-heroku)
   * [Postman](#postman)
 
 <!-- ABOUT THE PROJECT -->
@@ -30,17 +29,16 @@ A solução consiste em fazer uma aplicação para gerenciar log de erros, com o
 Utilizado banco de dados relacional com Mapper e Data Transfer Object(DTO)
 * [postgresql](https://www.postgresql.org/)
 
-### Video exemplo
+### Videos exemplos
 A aplicação foi executada via postman e usado Workflow para PR's
-* [Video](https://youtu.be/l58-7OBj4_I)
+* [Video API](https://youtu.be/XrLECF5VgIw)
+* [Video Frontend](https://youtu.be/fhnHDSgmG88)
 
-### Link Heroku API
+### Links Heroku
 Projeto hospedado no heroku e possui pipeline para controle de deploy.
 * [Heroku API](https://squad1-guiabolso-api.herokuapp.com/)
-
-### Link Heroku FRONTEND
-Projeto hospedado no heroku e possui pipeline para controle de deploy.
 * [Heroku Frontend](https://central-de-erros-frontend.herokuapp.com/)
+
 
 ### Postman
 Documentação referente às rotas e respostas
