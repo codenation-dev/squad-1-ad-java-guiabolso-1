@@ -1,15 +1,11 @@
 package br.com.guiabolso.centraldeerros.entity;
 
 import br.com.guiabolso.centraldeerros.enums.LevelEnum;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -58,7 +54,7 @@ public class Event {
 	private Long quantity = 0L;
 
 	@Column
-	private boolean archived = false;
+	private Boolean archived;
 
 	@Column(name = "modified_at")
 	private LocalDateTime modifiedAt;
@@ -68,5 +64,7 @@ public class Event {
 	@CreationTimestamp
 	private LocalDateTime createdAt;
 
+	public Event(Long id, LevelEnum level, String log, String description, String origin, String environment) {
+	}
 }
 

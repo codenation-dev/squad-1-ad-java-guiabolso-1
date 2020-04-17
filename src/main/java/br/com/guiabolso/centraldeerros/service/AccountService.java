@@ -14,7 +14,7 @@ public class AccountService {
 
     @Autowired
     AccountRepository accountRepository;
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 

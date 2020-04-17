@@ -1,26 +1,30 @@
 package br.com.guiabolso.centraldeerros.controller;
 
+import br.com.guiabolso.centraldeerros.dto.AccountDTO;
 import br.com.guiabolso.centraldeerros.entity.Account;
+import br.com.guiabolso.centraldeerros.mapper.AccountMapper;
 import br.com.guiabolso.centraldeerros.service.AccountService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
-import javax.validation.Valid;
-
 @Controller
+@AllArgsConstructor
 @RequestMapping("/api/account")
 public class AccountController {
 	
     @Autowired
     AccountService accountService;
+    private AccountMapper accountMapper;
 
     @ApiOperation(value = "Método cria um novo usuário")
 	@ApiResponses(value = {
@@ -30,9 +34,9 @@ public class AccountController {
 
 	)
     @PostMapping(produces = "application/json")
-    public ResponseEntity<Account> saveAccount(@Valid @RequestBody Account account){
-        try{            
-            return new ResponseEntity<Account>(accountService.save(account), HttpStatus.CREATED);
+    public ResponseEntity<AccountDTO> saveAccount(@Valid @RequestBody Account account){
+        try{
+            return ResponseEntity.status(HttpStatus.CREATED).body(accountMapper.map(accountService.save(account)));
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -47,11 +51,11 @@ public class AccountController {
 
 	)
     @GetMapping("/{id}")
-	public ResponseEntity<Account> getAccount(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<AccountDTO> getAccount(@PathVariable(value = "id") Long id) {
 		try {
 			Optional<Account> account = accountService.findById(id);
 			if (account.isPresent()) {
-				return new ResponseEntity<Account>(account.get(), HttpStatus.OK);
+				return new ResponseEntity<AccountDTO>(accountMapper.map(account.get()), HttpStatus.OK);
 			}
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {

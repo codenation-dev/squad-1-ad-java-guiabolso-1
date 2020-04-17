@@ -1,10 +1,9 @@
 package br.com.guiabolso.centraldeerros.payload;
 
-import java.io.Serializable;
+import lombok.Data;
 
 import javax.validation.constraints.NotNull;
-
-import lombok.Data;
+import java.io.Serializable;
 
 @Data
 public class AccountCredentials implements Serializable {
