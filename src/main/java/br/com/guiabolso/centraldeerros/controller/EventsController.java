@@ -7,9 +7,7 @@ import br.com.guiabolso.centraldeerros.service.EventService;
 import br.com.guiabolso.centraldeerros.specification.EventBooleanSpecification;
 import br.com.guiabolso.centraldeerros.specification.EventEnumSpecification;
 import br.com.guiabolso.centraldeerros.specification.EventStringSpecification;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,6 +32,7 @@ public class EventsController {
 	@Autowired
 	EventService eventService;
 	private EventMapper eventMapper;
+
 
 	@ApiOperation(value = "Método permite busca de evento por level, enviroment, origin, description e archived além de paginação")
 	@ApiResponses(value = {
