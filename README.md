@@ -9,7 +9,7 @@
   * [Videos exemplos](#videos-exemplos)
   * [Links Heroku](#links-heroku)
   * [Postman](#postman)
-  * [Apresentação Slides](#apresentacao)
+  * [Slides](#slides)
 
 <!-- ABOUT THE PROJECT -->
 ## Sobre o projeto
@@ -44,7 +44,7 @@ Projeto hospedado no heroku e possui pipeline para controle de deploy.
 Documentação referente às rotas e respostas
 * [Documentação](https://documenter.getpostman.com/view/2643864/Szf26Wfk?version=latest)
 
-### Apresentação
+### Slides
 Slides da utilizados durante a apresentação
 * [Slides apresentação](https://docs.google.com/presentation/d/e/2PACX-1vSvDeZXj2A5LQ8VITp3MP2dl0M85gG_bbUb0tx3-gTMVpW_1bQqU4hQEVvuaSjNtcxsig3ZfwTgerxd/pub?start=true&loop=false&delayms=3000)
 
