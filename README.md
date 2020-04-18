@@ -46,5 +46,5 @@ Documentação referente às rotas e respostas
 
 ### Apresentação
 Slides da utilizados durante a apresentação
-* [Slides apresentação](https://docs.google.com/presentation/d/1vRvp33MtNoUU8moCUetYqNKg5EkQACy4qWs3TnQ7dXQ/edit?usp=sharing)
+* [Slides apresentação](https://docs.google.com/presentation/d/e/2PACX-1vSvDeZXj2A5LQ8VITp3MP2dl0M85gG_bbUb0tx3-gTMVpW_1bQqU4hQEVvuaSjNtcxsig3ZfwTgerxd/pub?start=true&loop=false&delayms=3000)
 
