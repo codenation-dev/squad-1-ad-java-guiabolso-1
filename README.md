@@ -9,6 +9,7 @@
   * [Videos exemplos](#videos-exemplos)
   * [Links Heroku](#links-heroku)
   * [Postman](#postman)
+  * [Apresentação Slides](#apresentacao)
 
 <!-- ABOUT THE PROJECT -->
 ## Sobre o projeto
@@ -39,9 +40,11 @@ Projeto hospedado no heroku e possui pipeline para controle de deploy.
 * [Heroku API](https://squad1-guiabolso-api.herokuapp.com/)
 * [Heroku Frontend](https://central-de-erros-frontend.herokuapp.com/)
 
-
 ### Postman
 Documentação referente às rotas e respostas
 * [Documentação](https://documenter.getpostman.com/view/2643864/Szf26Wfk?version=latest)
 
+### Apresentação
+Slides da utilizados durante a apresentação
+* [Slides apresentação](https://docs.google.com/presentation/d/1vRvp33MtNoUU8moCUetYqNKg5EkQACy4qWs3TnQ7dXQ/edit?usp=sharing)
 
